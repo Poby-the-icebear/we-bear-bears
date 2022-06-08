@@ -117,22 +117,14 @@ class Customer:
 
     @staticmethod
     def not_for_sale(choice, change_value):
-        all_data = [[ne_key, ne_value] for ne_key, ne_value in items.items()]
-        a = []
-        b = []
-        c = []
-        last_list = []
         coins_total = coins['500원'] * 500 + coins['100원'] * 100
-        for row in all_data:
-            a.append(row[1]['price'])
-        for idx in a:
-            b.append((change_value - idx) - coins_total)
-        for row in all_data:
-            c.append(row[0])
+        all_data = [[ne_key, ne_value] for ne_key, ne_value in items.items()]
+        a = [row[1]['price'] for row in all_data]
+        b = [((change_value - idx) - coins_total) for idx in a]
+        c = [row[0] for row in all_data]
         res = np.array(b)
         d = np.where(res > 0)[0]
-        for i in d:
-            last_list.append(c[i])
+        last_list = [c[i] for i in d]
         if choice in last_list:
             return True
         else:
