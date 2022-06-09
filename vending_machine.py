@@ -249,18 +249,11 @@ class Customer:
                 self.change_process(change, change)
 
     def whole_process(self):
-        drink_selection = input('\n음료를 골라주세요: ')
+       drink_selection = input('\n음료를 골라주세요: ')
         if items[drink_selection]['pcs'] == 0 or self.not_for_sale(drink_selection, self.total) is True:
-            try:
-                raise
-            except:
-                if items[drink_selection]['pcs'] == 0:
-                    print("현재 주문 불가능한 제품입니다.\n")
-                    self.check_inven_cus()
-                    return self.whole_process
-                elif self.not_for_sale(drink_selection, self.total) is True:
-                    print("현재 주문 불가능한 제품입니다.\n")
-                    self.change_process(self.total, self.total)
+            print("현재 주문 불가능한 제품입니다.\n")
+            self.check_inven_cus()
+            return self.whole_process()
         else:
             self.order_process(drink_selection)
 
