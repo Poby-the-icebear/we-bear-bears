@@ -227,9 +227,13 @@ class Customer:
             try:
                 raise
             except:
-                print("현재 주문 불가능한 제품입니다.\n")
-                self.check_inven_cus()
-                return self.whole_process()
+                if items[drink_selection]['pcs'] == 0:
+                    print("현재 주문 불가능한 제품입니다.\n")
+                    self.check_inven_cus()
+                    return self.whole_process
+                elif self.not_for_sale(drink_selection, self.total) is True:
+                    print("현재 주문 불가능한 제품입니다.\n")
+                    self.change_process(self.total, self.total)
         else:
             self.order_process(drink_selection)
 
