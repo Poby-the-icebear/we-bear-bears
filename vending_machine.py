@@ -130,20 +130,47 @@ class Customer:
         else:
             return False
 
-    @staticmethod
-    def store_coins(input_money):
-        won1000 = input_money // 1000
-        input_money %= 1000
-        won500 = input_money // 500
-        input_money %= 500
-        won100 = input_money // 100
-        for cash in coins.keys():
-            if cash == '1000원':
-                coins["1000원"] += won1000
-            elif cash == "500원":
-                coins["500원"] += won500
+    def store_coins(self, input_money):
+        coin = []
+        a = [i for i in coins.keys()]
+        print("1000원짜리 500원짜리 100원짜리 몇 개를 넣을 지 입력하시오.")
+        for i in range(3):
+            coin.append(list(map(str, sys.stdin.readline().split())))
+        b = [row[0] for row in coin]
+        c = (int(coin[0][0].strip('원')) * int(coin[0][1])) + (int(coin[1][0].strip('원')) * int(coin[1][1])) + (int(
+            coin[2][0].strip('원')) * int(coin[2][1]))
+        for won in a:
+            if won not in b:
+                try:
+                    raise
+                except:
+                    print("존재 하지 않는 단위입니다.")
+                    print(f"{input_money}원을 가져가세요")
+                    self.total = 0
+                    return main()
+
             else:
-                coins["100원"] += won100
+                if c != input_money:
+                    question = input("입력된 수치가 다릅니다. 그냥 진행하시겠습니까? 네 or 아니요: ")
+                    if question == '네':
+                        coins[coin[0][0]] += int(coin[0][1])
+                        coins[coin[1][0]] += int(coin[1][1])
+                        coins[coin[2][0]] += int(coin[2][1])
+                        self.total = c
+                        print(f"현재 입력된 금액: {c}")
+                        break
+                    else:
+                        try:
+                            raise
+                        except:
+                            print(f"{c}원을 가져가세요")
+                            self.total = 0
+                            return main()
+
+                else:
+                    coins[coin[0][0]] += int(coin[0][1])
+                    coins[coin[1][0]] += int(coin[1][1])
+                    coins[coin[2][0]] += int(coin[2][1])
 
     def addition_money(self, addition):
         self.total += int(addition.strip('원'))
